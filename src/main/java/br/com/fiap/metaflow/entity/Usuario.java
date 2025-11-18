@@ -1,6 +1,9 @@
 package br.com.fiap.metaflow.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,8 +19,10 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-
+    @Email(message = "Email inválido")
+    @NotBlank(message = "O email é obrigatório")
     private String email;
+
     private String tituloProfissional;
     private String objetivoCarreira;
     private LocalDateTime dataCriacao = LocalDateTime.now();
@@ -77,6 +82,14 @@ public class Usuario implements UserDetails {
 
     public void setDataCriacao(LocalDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public UsuarioRole getRole() {
+        return role;
+    }
+
+    public void setRole(UsuarioRole role) {
+        this.role = role;
     }
 
     @Override

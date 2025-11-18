@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuários</title>
+    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+<div th:insert="~{fragments/header :: cabecalho}"></div>
+
+<div class="main_content container mt-4">
+    <h2 class="mb-3">Lista de Usuários</h2>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nome de Usuário</th>
+            <th>Email</th>
+            <th>Título Profissional</th>
+            <th>Objetivo de Carreira</th>
+            <th>Nível de Acesso (Role)</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="usuario : ${listaUsuarios}">
+            <td th:text="${usuario.id}"></td>
+            <td th:text="${usuario.username}"></td>
+            <td th:text="${usuario.email}"></td>
+            <td th:text="${usuario.tituloProfissional}"></td>
+            <td th:text="${usuario.objetivoCarreira}"></td>
+            <td th:text="${usuario.role}"></td>
+            <td th:text="${#temporals.format(usuario.dataCriacao, 'dd/MM/yyyy HH:mm')}"></td>
+            <td>
+                <button class="btn btn-primary btn-sm"
+                        th:attr="onclick=|showModal('infoModalUsuario' + ${usuario.id})|">
+                    Ver
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modais de Usuários -->
+    <div th:each="usuario : ${listaUsuarios}"
+         th:id="'infoModalUsuario' + ${usuario.id}"
+         style="display:none" class="card p-3 shadow-sm mt-3">
+        <h5>Detalhes dos Usuários</h5>
+        <p>
+            <b>ID:</b> <span th:text="${usuario.id}"></span><br/>
+            <b>Nome de Usuário:</b> <span th:text="${usuario.username}"></span><br/>
+            <b>Email:</b> <span th:text="${usuario.email}"></span><br/>
+            <b>Título Profissional:</b> <span th:text="${usuario.tituloProfissional}"></span><br/>
+            <b>Objetivo de Carreira:</b> <span th:text="${usuario.objetivoCarreira}"></span><br/>
+            <b>Nível de Acesso (Role):</b> <span th:text="${usuario.role}"></span><br/>
+            <b>Data de cadastro do usuário:</b>
+            <span th:text="${#temporals.format(usuario.dataCriacao, 'dd/MM/yyyy HH:mm')}"></span><br/>
+        </p>
+
+        <a th:href="@{/usuarios/cadastro/{id}(id=${usuario.id})}" class="btn btn-warning btn-sm">Editar</a>
+
+        <form th:action="@{/usuarios/deletar/{id}(id=${usuario.id})}"
+              method="post"
+              onsubmit="return confirm('Tem certeza que deseja excluir este usuario?')"
+              style="display:inline;">
+            <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+        </form>
+
+        <button class="btn btn-secondary btn-sm mt-2"
+                th:attr="onclick=|hideModal('infoModalUsuario' + ${usuario.id})|">
+            Fechar
+        </button>
+    </div>
+</div>
+
+<div th:insert="~{fragments/footer :: rodape}"></div>
+</body>
+</html>
