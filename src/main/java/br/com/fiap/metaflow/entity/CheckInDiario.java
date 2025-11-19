@@ -29,4 +29,8 @@ public class CheckInDiario {
 
     private String anotacoes;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Usuario usuario;
+
 }

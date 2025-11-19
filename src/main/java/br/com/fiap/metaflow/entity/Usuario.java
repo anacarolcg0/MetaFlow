@@ -37,6 +37,15 @@ public class Usuario implements UserDetails {
     @NotNull(message = "O nível de acesso é obrigatório")
     private UsuarioRole role;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<CheckInDiario> checkInDiarios;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Habilidade> habilidades;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Meta> metas;
+
     public Usuario() {}
 
     public Usuario(String username, String email, String tituloProfissional, String objetivoCarreira,

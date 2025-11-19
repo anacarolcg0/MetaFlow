@@ -17,6 +17,7 @@ public class SecurityConfig {
                                 authorizeRequests
                                         .requestMatchers("/").permitAll()
                                         .requestMatchers("/usuarios/lista").permitAll()
+                                        .requestMatchers("/metas/lista").permitAll()
                                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 ->

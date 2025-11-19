@@ -14,4 +14,9 @@ public class Habilidade {
     private Integer nivelAtual;
     private Integer nivelDesejado;
     private Boolean emAprendizado = true;
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Usuario usuario;
+
 }
