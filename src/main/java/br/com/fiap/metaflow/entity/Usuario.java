@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,17 +19,22 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "O nome de usuário é obrigatório")
     private String username;
     @Email(message = "Email inválido")
     @NotBlank(message = "O email é obrigatório")
     private String email;
-
+    @NotBlank(message = "O título profissional é obrigatório")
     private String tituloProfissional;
+    @NotBlank(message = "O objetivo de carreira é obrigatório")
     private String objetivoCarreira;
+
     private LocalDateTime dataCriacao = LocalDateTime.now();
 
+    @NotBlank(message = "A senha é obrigatória")
     private String password;
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "O nível de acesso é obrigatório")
     private UsuarioRole role;
 
     public Usuario() {}
@@ -107,9 +113,17 @@ public class Usuario implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
