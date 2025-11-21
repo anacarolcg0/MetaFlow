@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Metas</title>
+    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+<div th:insert="~{fragments/header :: cabecalho}"></div>
+
+<div class="main_content container mt-4">
+    <h2 class="mb-3">Lista de Habilidades</h2>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Nível Atual</th>
+            <th>Nível Desejado</th>
+            <th>Em Aprendizado</th>
+            <th>Usuário</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="habilidade : ${listaHabilidades}">
+            <td th:text="${habilidade.idHabilidade}"></td>
+            <td th:text="${habilidade.nome}"></td>
+            <td th:text="${habilidade.categoria}"></td>
+            <td th:text="${habilidade.nivelAtual}"></td>
+            <td th:text="${habilidade.nivelDesejado}"></td>
+            <td th:text="${habilidade.emAprendizado}"></td>
+            <td th:text="${habilidade.usuario != null ? habilidade.usuario.username : 'Nenhum usuário'}"></td>
+            <td>
+                <button class="btn btn-primary btn-sm"
+                        th:attr="onclick=|showModal('infoModalHabilidade' + ${habilidade.idHabilidade})|">
+                    Ver
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modais de Habilidades -->
+    <div th:each="habilidade : ${listaHabilidades}"
+         th:id="'infoModalHabilidade' + ${habilidade.idHabilidade}"
+         style="display:none" class="card p-3 shadow-sm mt-3">
+        <h5>Detalhes das Habilidades</h5>
+        <p>
+            <b>ID:</b> <span th:text="${habilidade.idHabilidade}"></span><br/>
+            <b>Nome:</b> <span th:text="${habilidade.nome}"></span><br/>
+            <b>Categoria:</b> <span th:text="${habilidade.categoria}"></span><br/>
+            <b>Nível Atual:</b> <span th:text="${habilidade.nivelAtual}"></span><br/>
+            <b>Nível Desejado:</b> <span th:text="${habilidade.nivelDesejado}"></span><br/>
+            <b>Em aprendizado:</b> <span th:text="${habilidade.emAprendizado}"></span><br/>
+            <b>Usuário:</b> <span th:text="${habilidade.usuario != null ? habilidade.usuario.username : 'Nenhum usuário'}"></span>
+        </p>
+
+        <a th:href="@{/habilidades/cadastro/{id}(id=${habilidade.idHabilidade})}" class="btn btn-warning btn-sm">Editar</a>
+
+        <form th:action="@{/habilidades/deletar/{id}(id=${habilidade.idHabilidade})}"
+              method="post"
+              onsubmit="return confirm('Tem certeza que deseja excluir esta Habilidade?')"
+              style="display:inline;">
+            <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+        </form>
+
+        <button class="btn btn-secondary btn-sm mt-2"
+                th:attr="onclick=|hideModal('infoModalHabilidade' + ${habilidade.idHabilidade})|">
+            Fechar
+        </button>
+    </div>
+</div>
+
+<div th:insert="~{fragments/footer :: rodape}"></div>
+</body>
+</html>
