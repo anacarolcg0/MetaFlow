@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Metas</title>
+    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <script th:src="@{/js/script.js}" defer></script>
+</head>
+<body>
+<div th:insert="~{fragments/header :: cabecalho}"></div>
+
+<div class="main_content container mt-4">
+    <h2 class="mb-3">Lista de Metas</h2>
+
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Categoria</th>
+            <th>Descrição</th>
+            <th>Valor Alvo</th>
+            <th>Valor Atual</th>
+            <th>Prazo</th>
+            <th>Status</th>
+            <th>Usuário</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="meta : ${listaMetas}">
+            <td th:text="${meta.idMeta}"></td>
+            <td th:text="${meta.titulo}"></td>
+            <td th:text="${meta.categoria}"></td>
+            <td th:text="${meta.descricao}"></td>
+            <td th:text="${meta.valorAlvo}"></td>
+            <td th:text="${meta.valorAtual}"></td>
+            <td th:text="${#temporals.format(meta.prazo, 'dd/MM/yyyy')}"></td>
+            <td th:text="${meta.status}"></td>
+            <td th:text="${meta.usuario != null ? meta.usuario.username : 'Nenhum usuário'}"></td>
+            <td>
+                <button class="btn btn-primary btn-sm"
+                        th:attr="onclick=|showModal('infoModalMeta' + ${meta.idMeta})|">
+                    Ver
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Modais de Metas -->
+    <div th:each="meta : ${listaMetas}"
+         th:id="'infoModalMeta' + ${meta.idMeta}"
+         style="display:none" class="card p-3 shadow-sm mt-3">
+        <h5>Detalhes do Cliente</h5>
+        <p>
+            <b>ID:</b> <span th:text="${meta.idMeta}"></span><br/>
+            <b>Título:</b> <span th:text="${meta.titulo}"></span><br/>
+            <b>Categoria:</b> <span th:text="${meta.categoria}"></span><br/>
+            <b>Descrição:</b> <span th:text="${meta.descricao}"></span><br/>
+            <b>Valor Alvo:</b> <span th:text="${meta.valorAlvo}"></span><br/>
+            <b>Valor Atual:</b> <span th:text="${meta.valorAtual}"></span><br/>
+            <b>Prazo:</b> <span th:text="${#temporals.format(meta.prazo, 'dd/MM/yyyy')}"></span><br/>
+            <b>Status:</b> <span th:text="${meta.status}"></span><br/>
+            <b>Usuário:</b> <span th:text="${meta.usuario != null ? meta.usuario.username : 'Nenhum usuário'}"></span>
+        </p>
+
+        <a th:href="@{/metas/cadastro/{id}(id=${meta.idMeta})}" class="btn btn-warning btn-sm">Editar</a>
+
+        <form th:action="@{/metas/deletar/{id}(id=${meta.idMeta})}"
+              method="post"
+              onsubmit="return confirm('Tem certeza que deseja excluir esta Meta?')"
+              style="display:inline;">
+            <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+        </form>
+
+        <button class="btn btn-secondary btn-sm mt-2"
+                th:attr="onclick=|hideModal('infoModalMeta' + ${meta.idMeta})|">
+            Fechar
+        </button>
+    </div>
+</div>
+
+<div th:insert="~{fragments/footer :: rodape}"></div>
+</body>
+</html>

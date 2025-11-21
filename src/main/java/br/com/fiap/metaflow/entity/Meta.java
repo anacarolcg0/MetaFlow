@@ -1,6 +1,10 @@
 package br.com.fiap.metaflow.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
@@ -10,13 +14,21 @@ public class Meta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMeta;
+    @NotBlank(message = "O título é obrigatório")
     private String titulo;
-    @Enumerated(EnumType.STRING)
-    private Categoria categoria;
+    @NotBlank(message = "A categoria é obrigatória")
+    private String categoria;
+    @NotBlank(message = "A descrição é obrigatória")
     private String descricao;
-    private Integer valorAlvo;
+    @Positive(message = "O valor alvo deve ser maior que zero")
+    @NotNull(message = "O valor alvo é obrigatório")
+    private Integer valorAlvo = 0;
+    @Min(value = 0, message = "O valor atual deve ser no mínimo 0")
+    @NotNull(message = "O valor atual é obrigatório")
     private Integer valorAtual = 0;
+    @NotNull(message = "O prazo é obrigatório")
     private LocalDate prazo;
+    @NotBlank(message = "O status é obrigatório")
     private String status = "Em andamento"; // em andamento, concluida, cancelada
 
     @ManyToOne
@@ -39,11 +51,11 @@ public class Meta {
         this.titulo = titulo;
     }
 
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 

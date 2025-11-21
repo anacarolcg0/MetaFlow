@@ -9,8 +9,7 @@ public class Habilidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idHabilidade;
     private String nome;
-    @Enumerated(EnumType.STRING)
-    private Categoria categoria;
+    private String categoria;
     private Integer nivelAtual;
     private Integer nivelDesejado;
     private Boolean emAprendizado = true;
