@@ -19,6 +19,7 @@ public class SecurityConfig {
                                         .requestMatchers("/usuarios/lista").permitAll()
                                         .requestMatchers("/metas/lista").permitAll()
                                         .requestMatchers("habilidades/lista").permitAll()
+                                        .requestMatchers("checkInDIarios/lista").permitAll()
                                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 ->
