@@ -79,5 +79,4 @@ public class HabilidadeController {
         habilidadeService.deleteHabilidade(id);
         return "redirect:/habilidades/lista";
     }
-
 }

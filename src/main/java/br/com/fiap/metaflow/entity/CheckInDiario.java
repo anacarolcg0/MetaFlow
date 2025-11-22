@@ -3,6 +3,8 @@ package br.com.fiap.metaflow.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -12,25 +14,32 @@ public class CheckInDiario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCheckInDiario;
+    @NotNull (message = "A data do check-in é obrigatória")
     private LocalDate data;
-
     @Min(1) @Max(10)
+    @NotNull (message = "O humor é obrigatório")
     private Integer humor;
     @Min(1) @Max(10)
+    @NotNull (message = "A qualidade do sono é obrigatória")
     private Integer qualidadeSono;
     @Min(1) @Max(10)
+    @NotNull (message = "O nível de estresse é obrigatório")
     private Integer nivelEstresse;
     @Min(1) @Max(10)
+    @NotNull (message = "A produtividade é obrigatória")
     private Integer produtividade;
-
+    @NotNull (message = "O tempo de trabalho é obrigatório")
     private Integer tempoTrabalho;
+    @NotNull (message = "O tempo de aprendizado é obrigatório")
     private Integer tempoAprendizado;
+    @NotNull (message = "O tempo de lazer é obrigatório")
     private Integer tempoLazer;
-
+    @Size(max = 500, message = "As anotações podem ter no máximo 500 caracteres")
     private String anotacoes;
 
     @ManyToOne
     @JoinColumn(name = "id")
+    @NotNull(message = "O usuário é obrigatório")
     private Usuario usuario;
 
     public Long getIdCheckInDiario() {

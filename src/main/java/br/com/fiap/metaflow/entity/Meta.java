@@ -33,6 +33,7 @@ public class Meta {
 
     @ManyToOne
     @JoinColumn(name = "id")
+    @NotNull(message = "O usuário é obrigatório")
     private Usuario usuario;
 
     public Long getIdMeta() {
