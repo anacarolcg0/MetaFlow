@@ -34,7 +34,7 @@
             <td th:text="${habilidade.categoria}"></td>
             <td th:text="${habilidade.nivelAtual}"></td>
             <td th:text="${habilidade.nivelDesejado}"></td>
-            <td th:text="${habilidade.emAprendizado}"></td>
+            <td th:text="${habilidade.emAprendizado ? 'Sim' : 'Não'}"></td>
             <td th:text="${habilidade.usuario != null ? habilidade.usuario.username : 'Nenhum usuário'}"></td>
             <td>
                 <button class="btn btn-primary btn-sm"
@@ -57,7 +57,7 @@
             <b>Categoria:</b> <span th:text="${habilidade.categoria}"></span><br/>
             <b>Nível Atual:</b> <span th:text="${habilidade.nivelAtual}"></span><br/>
             <b>Nível Desejado:</b> <span th:text="${habilidade.nivelDesejado}"></span><br/>
-            <b>Em aprendizado:</b> <span th:text="${habilidade.emAprendizado}"></span><br/>
+            <b>Em aprendizado:</b> <span th:text="${habilidade.emAprendizado ? 'Sim' : 'Não'}"></span><br/>
             <b>Usuário:</b> <span th:text="${habilidade.usuario != null ? habilidade.usuario.username : 'Nenhum usuário'}"></span>
         </p>
 

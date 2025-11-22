@@ -22,9 +22,11 @@
         </div>
 
         <div class="mb-3">
-            <label for="categoria" class="form-label">categoria:</label>
+            <label for="categoria" class="form-label">Categoria:</label>
             <select id="categoria" th:field="*{categoria}" class="form-select">
-                <option value="" disabled selected>Selecione a categoria...</option>
+                <option value="" th:selected="${meta.categoria == null}">
+                    Selecione a categoria...
+                </option>
                 <option value="carreira">Carreira</option>
                 <option value="habilidades">Habilidades</option>
                 <option value="saude">Saúde</option>
@@ -67,7 +69,10 @@
         <div class="mb-3">
             <label for="status" class="form-label">Status:</label>
             <select id="status" th:field="*{status}" class="form-select">
-                <option value="" disabled selected>Selecione o status...</option>
+                <option value="" th:selected="${meta.status == null}">
+                    Selecione o status...
+                </option>
+
                 <option value="em andamento">Em andamento</option>
                 <option value="concluida">Concluída</option>
                 <option value="cancelada">Cancelada</option>

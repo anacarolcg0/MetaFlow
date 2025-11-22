@@ -24,7 +24,10 @@
         <div class="mb-3">
             <label for="categoria" class="form-label">Categoria:</label>
             <select id="categoria" th:field="*{categoria}" class="form-select">
-                <option value="" disabled selected>Selecione a categoria...</option>
+                <option value="" th:selected="${habilidade.categoria == null}">
+                    Selecione a categoria...
+                </option>
+
                 <option value="carreira">Carreira</option>
                 <option value="habilidades">Habilidades</option>
                 <option value="saude">Saúde</option>
